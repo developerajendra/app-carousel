@@ -1,0 +1,52 @@
+ 
+ 
+    .carousel{
+        // display: flex;
+        // position: absolute;
+        // width: 919px;
+        // padding: 0;
+        
+ 
+        li{
+            list-style: none;
+            background: #26adee;
+            margin: 3px;
+            -ms-flex: 3;
+            flex: 3;
+            // padding: 22px;
+            text-align: center;
+            &:first-child{
+                margin-left: 0;
+            }
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+
+        &.animate{
+            animation: pulse 1s;
+        }
+    }
+
+    // @keyframes pulse {
+    //     0% {
+    //       left:0
+    //     }
+    //     100% {
+    //       left:-153px
+    //     }
+    //   }
+
+     .controls{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 234px;
+
+            button{
+                margin: 3px;
+            }
+        
+    }
