@@ -4,6 +4,7 @@ import "./button.css"
 /**
  * State less component
  */
-export const Button = ({type, text, onClick})=>{
-    return (<button className={type ? `btn ${type}` : 'btn'} onClick={(event)=>onClick(event)}>{text}</button>);
+export const Button = ({type, text, onClick, disabled})=>{
+     let _class = type ? `btn ${type}` : 'btn';
+    return (<button  className={_class} onClick={(event)=>onClick(event)}>{text}</button>);
 }

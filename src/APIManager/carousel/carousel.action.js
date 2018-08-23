@@ -1,14 +1,20 @@
 import {GET} from "../../services/webApiService";
+import {BASE_URL, API_KEY} from "../../services/APIURLs";
 
-export const fetchImages = () => (dispatch) => {
-    return GET('https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=beautiful+landscape&image_type=photo')
+import {carouselArrayTransformer} from "./carousel.transformer";
+
+export const fetchImages = (options) => (dispatch) => {
+    const options = {
+        config:"q=beautiful+landscape&image_type=photo"
+    }
+    const URL = `${BASE_URL}/?key=${API_KEY}&${options.config}`;
+    return GET(URL)
     .then(response=>{
-        const _images = response.data.hits;
+        const _images = carouselArrayTransformer(response.data.hits);
         dispatch({
             type: "fetch_images",
             data:_images
         });
-
         return _images;
     });
 }

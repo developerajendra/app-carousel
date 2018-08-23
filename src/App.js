@@ -9,6 +9,7 @@ import createStore from "./reduxStore/store";
 import {CAROUSEL_CONFIG} from "./constants/carousel.costant"
 
 const store = createStore();
+
 class App extends Component {
   render() {
     return (
