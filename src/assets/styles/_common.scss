@@ -1,0 +1,15 @@
+.container{
+    max-width: 999px;
+    margin: auto;
+    width: 100%;
+    @media all and (max-width:1024px){
+        padding: 0 20px;
+    }
+}
+.container-fluid{
+    width: 100%;
+    background: #fff;
+}
+h1{
+    color:#12679a
+} 

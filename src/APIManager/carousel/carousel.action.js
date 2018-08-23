@@ -7,7 +7,7 @@ export const fetchImages = () => (dispatch) => {
         dispatch({
             type: "fetch_images",
             data:_images
-        })
+        });
 
         return _images;
     });

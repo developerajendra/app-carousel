@@ -1,72 +1,27 @@
 import React, { Component, Fragment } from 'react';
 import { bindActionCreators } from 'redux'
 import {connect} from "react-redux";
-import styled from 'styled-components';
-import { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
+/**
+ * Local & custom imports
+ */
 import {fetchImages} from "../../APIManager/carousel/carousel.action"
-import "./carousel.css";
-
-
-const CarouselStyle = styled.section` 
-    font-size: 1em;
-    margin: 1em;
-    border-radius: 3px;
-    width: ${props=> props.witdh + 'px'}
-    position: relative;
-    overflow: hidden;
-    margin: auto;
-    min-height: 403px;
-`;
-
- 
-const animate = keyframes`
-  from {
-    left:0;
-  }
-  to{
-    left:  ${props=> props.witdh + 'px'}
-  }
-   
-`;
-
-function animation (props) {
-  return keyframes`
-  from{
-    left:0
-  }
-    to {
-      right: ${props.width};
-    }
-  `
-}
-
- 
-const AnimateSlider = styled.ul`   
-  transition: all ease-in-out .3s;
-    display: flex;
-    position: absolute;
-    left:0
-    width: 919px;
-    padding: 0;
-    transform:${props=>  `translateX(-${props.next}px)`}
-  `;
+import "../common/button/Button"
+import  "./carousel.css";
+import {CarouselStyle, AnimateSlider} from "./customStyle";
+import {Button} from "../common";
 
 class Carousel extends Component {
-  
-
   constructor(props){
     super(props);
-
     this.state = {
       images:[],
       animate:false,
       animateNext:0,
       animatePrev:0,
       containerWidth:0,
-      itemsToShow:0,
-      imageWidth:0,
-      imageGap:0
+      imageWidth:0
     }
   }
    
@@ -77,7 +32,6 @@ class Carousel extends Component {
     .then(data=>{
       this.setState({images:data});
     });
-
     this.resizeCarousel();
   }
 
@@ -85,11 +39,9 @@ class Carousel extends Component {
    * Adjust container width on resize of browser
    */
   resizeCarousel() {
-    const {options} = this.props;
-     
-    const {containerWidth, itemsToShow, imageWidth, imageGap} =  this.props.options;
+    const {options} = this.props;    
+    const {containerWidth, imageWidth} =  this.props.options;
  
-
     /**
      * Common set state    
      */
@@ -108,7 +60,7 @@ class Carousel extends Component {
         this.setState({containerWidth:_containerWidth});
          
         if(window.innerWidth<=768){
-          this.setState({imageWidth : _containerWidth});
+          this.setState({containerWidth:_containerWidth / 2, imageWidth : _containerWidth/2});
         }else{
           this.setState({imageWidth: _containerWidth / 3});
         }
@@ -118,29 +70,38 @@ class Carousel extends Component {
     }
 
 
-
-  
+    /**
+     * window browser resize event
+     */
     window.onresize = ()=>{
       calculateWidth()
      };
      calculateWidth();
-
   }
   
+  /**
+   * Rendering the carousel list
+   */
   renderCarousel = (imageWidth, imageGap) => {
     let _list =  this.state.images && this.state.images.length && this.state.images.map((data, index)=>
-      {return data.userImageURL && <li key={index}><img src={data.userImageURL} width={imageWidth} alt={data.tags} /> </li>}
+      {return data.userImageURL && 
+      <li key={index}><img src={data.userImageURL} width={imageWidth} alt={data.tags} />
+        <span>{data.user}</span>
+       </li>}
     );
     return _list;
   }
 
+  /**
+   * previous click event
+   */
   previous = () =>{
     let {animateNext,imageWidth } = this.state
     this.setState({  animateNext: (animateNext-5) - imageWidth });
   }
 
   /**
-   * Next click 
+   * Next click  event
    */
   next = (event) =>{
     let {animateNext,imageWidth } = this.state
@@ -152,17 +113,35 @@ class Carousel extends Component {
 
     return (
         <Fragment>
-          <h1 style={{textAlign:'center', paddingTop: 50}}>Carousel</h1>
-          <CarouselStyle witdh={this.state.containerWidth}  >
-            <AnimateSlider className="carousel"  next={this.state.animateNext} > {this.renderCarousel(this.state.imageWidth || imageWidth(), imageGap)}</AnimateSlider>
-            <div className="controls">
-              <button class="btn btn-primary" onClick={(event)=>this.previous(event)}>Previous</button>
-              <button class="btn btn-primary" onClick={(event)=>this.next(event)}>Next</button>
-            </div>
-          </CarouselStyle>
+          <div className="container">
+              <h1>Carousel Test</h1>
+          </div>
+          
+          <div className="container-fluid">
+            <CarouselStyle className="carousel-wrapper" witdh={this.state.containerWidth}  >
+              <AnimateSlider className="carousel"  next={this.state.animateNext} > {this.renderCarousel(this.state.imageWidth || imageWidth(), imageGap)}</AnimateSlider>
+            </CarouselStyle>
+          </div>
+
+          <div className="controls">
+              <Button type="prev" text="Prev" onClick={this.previous} />
+              <Button type="next" text="Next" onClick={this.next} />
+          </div>
+          
          </Fragment>
       );
   }
+};
+
+/**
+ * Property type
+ */
+Carousel.propTypes = {
+  options:PropTypes.object,
+  containerWidth: PropTypes.number,
+  imageWidth: PropTypes.number,
+  imageGap: PropTypes.number,
+  carouselImages: PropTypes.array
 }
 
 const mapStateToProps = state => ({

@@ -1,0 +1,24 @@
+.controls {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 22px auto;
+  width: 165px; }
+
+.btn {
+  margin: 3px;
+  background: #12679a;
+  color: #fff;
+  border: none;
+  padding: 6px 22px;
+  font-weight: 600;
+  font-size: .9rem;
+  min-width: 72px;
+  cursor: pointer;
+  -webkit-transition: .7s; }
+  .btn.next {
+    border-radius: 0 8px 8px 0; }
+  .btn.prev {
+    border-radius: 8px 0 0 8px; }
+  .btn:hover, .btn:focus {
+    background: #2676a7; }

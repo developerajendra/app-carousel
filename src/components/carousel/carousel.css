@@ -1,10 +1,19 @@
+@media all and (max-width: 1024px) {
+  .container-fluid .carousel-wrapper {
+    min-height: 365px; } }
+
+@media all and (max-width: 767px) {
+  .container-fluid .carousel-wrapper {
+    min-height: 55vw; } }
+
 .carousel li {
   list-style: none;
-  background: #26adee;
   margin: 3px;
   -ms-flex: 3;
   flex: 3;
-  text-align: center; }
+  text-align: left;
+  font-size: 1.3rem;
+  color: #12679a; }
   .carousel li:first-child {
     margin-left: 0; }
   .carousel li:last-child {
@@ -12,13 +21,3 @@
 
 .carousel.animate {
   animation: pulse 1s; }
-
-.controls {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 234px; }
-  .controls button {
-    margin: 3px; }
